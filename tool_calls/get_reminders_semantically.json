@@ -1,0 +1,21 @@
+{
+  "name": "get_reminders_semantically",
+  "description": "Finds the reminder that most closely resembles the abstract provided.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "Abstract": {
+        "type": "string",
+        "description": "All of the information about what the reminder was about should be put here."
+      },
+      "Count": {
+        "type": "integer",
+        "description": "This should be 1 if the user wants the most similar reminder, otherwise the number of reminders they'd like."
+      }
+    },
+    "required": [
+      "Abstract",
+      "Count"
+    ]
+  }
+}

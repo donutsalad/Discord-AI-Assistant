@@ -1,0 +1,21 @@
+{
+  "name": "create_memory",
+  "description": "This creates an embedding that is stored in a database for quick recall later using cosine similarity.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "Abstract": {
+        "type": "string",
+        "description": "All of the information required for the memory should be put here in a way it can be embedded semantically."
+      },
+      "Memory": {
+        "type": "string",
+        "description": "Whatever the user wants to store, a URL, a discord message link, or simply a plain text result."
+      }
+    },
+    "required": [
+      "Abstract",
+      "Memory"
+    ]
+  }
+}

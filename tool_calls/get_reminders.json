@@ -1,0 +1,16 @@
+{
+  "name": "get_reminders",
+  "description": "Returns a list of the reminders abstracts and times sorted in ascending order.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "Count": {
+        "type": "integer",
+        "description": "This should be 1 if the user wants the most recent reminder, otherwise the number of reminders she'd like."
+      }
+    },
+    "required": [
+      "Count"
+    ]
+  }
+}

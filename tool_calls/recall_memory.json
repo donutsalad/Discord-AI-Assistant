@@ -1,0 +1,21 @@
+{
+  "name": "recall_memory",
+  "description": "This function embeds the provided abstract in the same embedding space as all memories, and returns the closest matches.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "Abstract": {
+        "type": "string",
+        "description": "All of the information that is available that would be as similar to the original abstract as possible."
+      },
+      "Count": {
+        "type": "integer",
+        "description": "How many matches to return."
+      }
+    },
+    "required": [
+      "Abstract",
+      "Count"
+    ]
+  }
+}

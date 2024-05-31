@@ -1,0 +1,22 @@
+{
+  "name": "set_new_reminder",
+  "description": "This will create a trigger that you will then be relayed back to you at a later date.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "Abstract": {
+        "type": "string",
+        "description": "All of the information required for the reminder should be put here in a way it can be embedded semantically"
+      },
+      "Time": {
+        "type": "string",
+        "format": "yyyy-mm-dd hh:mm:ss",
+        "description": "The time the reminder should go off in the format yyyy-mm-dd hh:mm:ss"
+      }
+    },
+    "required": [
+      "Abstract",
+      "Time"
+    ]
+  }
+}

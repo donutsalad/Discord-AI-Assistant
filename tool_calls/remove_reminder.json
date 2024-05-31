@@ -1,0 +1,16 @@
+{
+  "name": "remove_reminder",
+  "description": "This will remove the reminder that has the abstract closest to the one provided.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "Abstract": {
+        "type": "string",
+        "description": "The abstract of the reminder that is to be deleted."
+      }
+    },
+    "required": [
+      "Abstract"
+    ]
+  }
+}
