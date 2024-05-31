@@ -1,6 +1,6 @@
 import json
 import re
-import tools.ToolCall
+import Tools.ToolCall
 
 from youtubesearchpython import VideosSearch
 from youtube_transcript_api import YouTubeTranscriptApi
@@ -30,14 +30,14 @@ class VideoInformation:
         })
         
 
-def GetYoutubeVideos(tool_call: tools.ToolCall.ToolCall) -> str:
+def GetYoutubeVideos(tool_call: Tools.ToolCall.ToolCall) -> str:
     videos = VideosSearch(tool_call.args["Query"], limit = int(tool_call.args["Count"]))
     results: dict = videos.result()
     return json.dumps({
         "Videos": [VideoInformation(video).as_json() for video in results["result"]]
     })
 
-def GetYoutubeTranscript(tool_call: tools.ToolCall.ToolCall) -> str:
+def GetYoutubeTranscript(tool_call: Tools.ToolCall.ToolCall) -> str:
     youtubeID: str = extract_youtube_id(tool_call.args["URL"])
     transcript = YouTubeTranscriptApi.get_transcript(youtubeID)
     return json.dumps({
