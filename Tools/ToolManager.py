@@ -2,6 +2,8 @@ import openai
 import asyncio
 import discord
 
+import Tools.Wikipedia
+import Tools.Youtube
 import log
 import ticker
 import Tools
@@ -24,7 +26,13 @@ tool_list = [
   {"tool_id": "remove_reminder", "method": Tools.Reminders.remove_reminder},
   {"tool_id": "create_memory", "method": Tools.Memory.create_memory},
   {"tool_id": "forget_memory", "method": Tools.Memory.forget_memory},
-  {"tool_id": "recall_memory", "method": Tools.Memory.recall_memory}
+  {"tool_id": "recall_memory", "method": Tools.Memory.recall_memory},
+  
+  {"tool_id": "search_youtube", "method": Tools.Youtube.GetYoutubeVideos},
+  {"tool_id": "get_youtube_transcript", "method": Tools.Youtube.GetYoutubeTranscript},
+  
+  {"tool_id": "get_wikipedia_page", "method": Tools.Wikipedia.SearchWikipedia},
+  {"tool_id": "get_wikipedia_references", "method": Tools.Wikipedia.GetWikipediaReferences}
 ]
 
 class ToolManager:
@@ -35,8 +43,10 @@ class ToolManager:
     self.reminders = reminders
 
   async def handle_tool_call(self, tool, client):
-    
+  
     args = json.loads(tool.function.arguments)
+    
+    log.ToolCalled(tool.function.name, args)
     
     for method in tool_list:
       if method["tool_id"] == tool.function.name:

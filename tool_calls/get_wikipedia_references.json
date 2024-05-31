@@ -1,0 +1,16 @@
+{
+  "name": "get_wikipedia_references",
+  "description": "This function searches for the wikipedia page given a user query, and returns the references of the article.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "Query": {
+        "type": "string",
+        "description": "The query of their choice to search wikipedia for a page on."
+      }
+    },
+    "required": [
+      "Query"
+    ]
+  }
+}

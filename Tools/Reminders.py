@@ -14,8 +14,6 @@ import Tools.ToolCall
       
 def set_new_reminder(tool_call: Tools.ToolCall.ToolCall) -> str:
   
-  log.ToolCalled("set_new_reminder", tool_call.args)
-  
   try:
     print(tool_call.tool.function.arguments)
     reminder_abstract = tool_call.args["Abstract"]
@@ -29,7 +27,6 @@ def set_new_reminder(tool_call: Tools.ToolCall.ToolCall) -> str:
 
 def get_reminders(tool_call: Tools.ToolCall.ToolCall) -> str:
   
-  log.ToolCalled("get_reminders", tool_call.args)
   if tool_call.args.get("Count") is None:
     count = 1
     
@@ -61,9 +58,7 @@ def get_reminders(tool_call: Tools.ToolCall.ToolCall) -> str:
   return final_result
 
 def get_reminders_semantically(tool_call: Tools.ToolCall.ToolCall) -> str:
-  
-  log.ToolCalled("get_reminders_semantically", tool_call.args)
-  
+    
   if tool_call.args.get("Count") is None:
     count = 1
     
@@ -101,8 +96,6 @@ def get_reminders_semantically(tool_call: Tools.ToolCall.ToolCall) -> str:
   return final_result
 
 def remove_reminder(tool_call: Tools.ToolCall.ToolCall) -> str:
-  
-  log.ToolCalled("remove_reminder", tool_call.args)
   
   reminder = None
   

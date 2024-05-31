@@ -1,0 +1,16 @@
+{
+  "name": "get_youtube_transcript",
+  "description": "This function takes the URL provided, and returns the transcript of the video.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "URL": {
+        "type": "string",
+        "description": "The URL of their choice."
+      }
+    },
+    "required": [
+      "URL"
+    ]
+  }
+}

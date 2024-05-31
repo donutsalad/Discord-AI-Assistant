@@ -1,0 +1,21 @@
+{
+  "name": "search_youtube",
+  "description": "This function searches YouTube for videos and returns the key information about them.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "Query": {
+        "type": "string",
+        "description": "The search query the user has provided."
+      },
+      "Count": {
+        "type": "integer",
+        "description": "This should be 1 if the user wants the top result, otherwise the number of results they'd like."
+      }
+    },
+    "required": [
+      "Query",
+      "Count"
+    ]
+  }
+}

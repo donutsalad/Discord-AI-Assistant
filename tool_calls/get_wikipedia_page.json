@@ -1,0 +1,16 @@
+{
+  "name": "get_wikipedia_page",
+  "description": "This function searches for the wikipedia page given a user query, and returns the content of the page for analysis.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "Query": {
+        "type": "string",
+        "description": "The query of their choice to search wikipedia for a page on."
+      }
+    },
+    "required": [
+      "Query"
+    ]
+  }
+}
