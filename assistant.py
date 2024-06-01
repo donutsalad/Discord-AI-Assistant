@@ -134,12 +134,12 @@ class OpenAIChatHandler:
           filename = f"{datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")} - {filename}"
           
         await attachment.save(f"downloads/{filename}")
-        files.append(filename)
+        files.append(attachment.url)
         
       if len(dmessage.content) == 0:
-        message = f"Ask me what I'd like to do with these files: {", ".join(files)}"
+        message = f"Ask me what I'd like to do with these file links: {", ".join(files)}"
       
-      message = f"{message} | attached files: {", ".join(files)}"
+      message = f"{message} | attached file links: {", ".join(files)}"
     
     async with dmessage.channel.typing():
       

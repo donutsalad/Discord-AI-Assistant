@@ -71,13 +71,13 @@ def recall_memory(tool_call: Tools.ToolCall.ToolCall) -> str:
       
   if count == 1:
     final_result = json.dumps({
-      "result": "If it has a high confidence you can just let her know the content - otherwise also let her know you're not sure if she means this particular memory.",
-      "reminders": results[0]
+      "Instruction": "If it has a high confidence you can just let her know the content - otherwise also let her know you're not sure if she means this particular memory.",
+      "results": results[0]
     })
           
   else: final_result = json.dumps({
-      "result": "Show the user a list of the abstracts and their scores, and then when she specifies one you can let her know the content of the memory.",
-      "reminders": results[:count]
+      "Instruction": "Show the user a list of the abstracts and their scores, and then when she specifies one you can let her know the content of the memory.",
+      "results": results[:count]
     })
           
   return final_result

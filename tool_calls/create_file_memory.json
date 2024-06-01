@@ -8,14 +8,14 @@
         "type": "string",
         "description": "All of the information required for the file memory should be put here in a way it can be embedded semantically."
       },
-      "FilePath": {
+      "URL": {
         "type": "string",
-        "description": "The filename of the file that the user is wanting to create a memory of."
+        "description": "The URL of the file that the user is wanting to create a memory of."
       }
     },
     "required": [
       "Abstract",
-      "FilePath"
+      "URL"
     ]
   }
 }

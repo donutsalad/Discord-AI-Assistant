@@ -18,7 +18,7 @@ def create_file_memory(tool_call: Tools.ToolCall.ToolCall) -> str:
   log.ToolCalled(tool_call.tool.function.name, tool_call.args)
   
   try:
-    tool_call.filebank.NewMemory(tool_call.client, tool_call.args["Abstract"], tool_call.args["FilePath"])
+    tool_call.filebank.NewMemory(tool_call.client, tool_call.args["Abstract"], tool_call.args["URL"])
     
   except Exception as e:
     return "Tell the user the filebank has failed to create the file memory"
@@ -38,7 +38,6 @@ def forget_file_memory(tool_call: Tools.ToolCall.ToolCall) -> str:
         })
       return confirm
     else:
-      os.remove(f"downloads/{memory[0].memory.memory}")
       tool_call.filebank.RemoveMemory(memory[0].memory)
       
   except Exception as e:  
@@ -67,21 +66,20 @@ def recall_file_memory(tool_call: Tools.ToolCall.ToolCall) -> str:
   for memory in sorted:
     results.append({
       "memory_abstract": memory.memory.abstract,
-      "file_path": memory.memory.memory,
+      "file_url": memory.memory.memory,
       "match_score": memory.score,
       "match_confidence": memory.strength
       })  
       
   if count == 1:
-    asyncio.create_task(tool_call.user.dm_channel.send("File upload:", file = File(f"downloads/{results[0]["file_path"]}")))
     final_result = json.dumps({
-      "result": "The file has been uploaded, confirm with the user this was what they were searching for.",
-      "reminders": results[0]
+      "Instruction": "The file has been uploaded, confirm with the user this was what they were searching for.",
+      "result": results[0]
     })
           
   else: final_result = json.dumps({
-      "result": "Show the user a list of the abstracts and their scores, and then when they specify one you can let them know the content of the file memory.",
-      "reminders": results[:count]
+      "Instruction": "Show the user a list of the abstracts and their scores, and then when they specify one you can let them know the content of the file memory.",
+      "results": results[:count]
     })
           
   return final_result
