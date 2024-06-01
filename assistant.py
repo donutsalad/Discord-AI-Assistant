@@ -160,7 +160,7 @@ class OpenAIChatHandler:
         
       match self.run.status:
         case "failed":
-          await self.discorduser.dm_channel.send("Please let me (Isabelle) know what happened if you're seeing this <3 - something went wrong that I didn't expect!")
+          await self.discorduser.dm_channel.send("Please let me (the user) know what happened if you're seeing this <3 - something went wrong that I didn't expect!")
           
         case "in_progress":
           #print("waiting for responce...")

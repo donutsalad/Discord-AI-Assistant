@@ -42,8 +42,8 @@ async def main():
   routerqueue = asyncio.Queue()
   assistantqueue = asyncio.Queue()
   
-  memories = Tools.MemoryBank.MemoryBank("memories")
-  reminders = Tools.ReminderBank.ReminderBank("reminders")
+  memories = Tools.MemoryBank.MemoryBank("data/memories")
+  reminders = Tools.ReminderBank.ReminderBank("data/reminders")
   
   client = discordbot.SetupDiscordClient(assistantqueue, routerqueue, user_id)
   ticking = ticker.Ticker(reminders, memories, masterqueue)

@@ -40,7 +40,7 @@ def SetupDiscordClient(aipiaqueue: asyncio.Queue, routerqueue: asyncio.Queue, us
       await aipiaqueue.put(message)
       
     except Exception as e:
-      await message.channel.send("Please let me (Isabelle) know when you saw this. There's an error in the discord bot code!")
+      await message.channel.send("Please let me (the user) know when you saw this. There's an error in the discord bot code!")
       print("Specific error:")
       print(e)
       
