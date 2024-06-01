@@ -2,7 +2,7 @@ import json
 import discord
 import datetime
 
-filename = "log"
+filename = "data/log"
 
 def EscapedIncomingMessage(message: discord.Message):
   
