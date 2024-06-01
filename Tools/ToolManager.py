@@ -2,6 +2,9 @@ import openai
 import asyncio
 import discord
 
+import Tools.NCBI
+import Tools.PhysOrg
+import Tools.SearchGoogle
 import Tools.Wikipedia
 import Tools.Youtube
 import log
@@ -30,9 +33,21 @@ tool_list = [
   
   {"tool_id": "search_youtube", "method": Tools.Youtube.GetYoutubeVideos},
   {"tool_id": "get_youtube_transcript", "method": Tools.Youtube.GetYoutubeTranscript},
+
+  {"tool_id": "get_latest_physorg_articles", "method": Tools.PhysOrg.get_latest_phys_articles},
+  {"tool_id": "search_physorg_articles", "method": Tools.PhysOrg.search_physorg_articles},
+  {"tool_id": "read_physorg_article", "method": Tools.PhysOrg.read_physorg_article},
+
+  {"tool_id": "search_google", "method": Tools.SearchGoogle.SearchGoogle},
+  {"tool_id": "read_page_from_google", "method": Tools.SearchGoogle.ReadPageFromGoogle},
   
+  
+  #Example Functions
   {"tool_id": "get_wikipedia_page", "method": Tools.Wikipedia.SearchWikipedia},
-  {"tool_id": "get_wikipedia_references", "method": Tools.Wikipedia.GetWikipediaReferences}
+  {"tool_id": "get_wikipedia_references", "method": Tools.Wikipedia.GetWikipediaReferences},
+
+  {"tool_id": "search_ncbi", "method": Tools.NCBI.search_ncbi},
+  {"tool_id": "read_ncbi", "method": Tools.NCBI.read_ncbi}
 ]
 
 class ToolManager:
@@ -57,5 +72,5 @@ class ToolManager:
       
     return [{
       "tool_call_id": tool.id,
-      "output": "Please let Izzy know that this tool isn't implemented yet"
+      "output": "Please let the user know that this tool isn't implemented yet"
     }]

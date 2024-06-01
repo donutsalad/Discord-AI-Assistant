@@ -1,0 +1,16 @@
+{
+    "name": "read_physorg_article",
+    "description": "This function returns the text from an article on Phys.org.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "URL": {
+          "type": "string",
+          "description": "The URL of the article requested."
+        }
+      },
+      "required": [
+        "URL"
+      ]
+    }
+  }

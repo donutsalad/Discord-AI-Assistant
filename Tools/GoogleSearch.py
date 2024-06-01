@@ -12,14 +12,14 @@ with open("tokens.txt") as f:
     if line.startswith("google: "):
       my_api_key = line[8:].rstrip("\n")
       aquired += 1
-    elif line.startswith("context: "):
-      my_cse_id = line[9:].rstrip("\n")
+    elif line.startswith("search: "):
+      my_cse_id = line[8:].rstrip("\n")
       aquired += 1
       
-def google_search(search_term, api_key, cse_id, **kwargs):
+def google_search(search_term, api_key, cse_id, num, **kwargs):
   service = build("customsearch", "v1", developerKey = api_key)
   res = service.cse().list(q=search_term, cx=cse_id, **kwargs).execute()
-  return res['items']
+  return res['items'][:-num]
   
 def GetGoogleSearches(site: str, query: str, count: int):
   

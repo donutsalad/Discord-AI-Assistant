@@ -1,0 +1,16 @@
+{
+    "name": "read_page_from_google",
+    "description": "This function takes the URL provided and returns the content of the web page.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "URL": {
+          "type": "string",
+          "description": "The URL of their choice."
+        }
+      },
+      "required": [
+        "URL"
+      ]
+    }
+  }

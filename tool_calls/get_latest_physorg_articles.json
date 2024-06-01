@@ -1,0 +1,9 @@
+{
+    "name": "get_latest_physorg_articles",
+    "parameters": {
+      "type": "object",
+      "properties": {},
+      "required": []
+    },
+    "description": "This function fetches the latest news articles from phys.org."
+}
