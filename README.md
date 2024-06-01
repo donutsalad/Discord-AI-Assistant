@@ -1,5 +1,5 @@
 # Discord AI Assistant
-### Detailed readme coming soon
+### Detailed README coming soon.
 
 A personal assistant based around GPT4o and the assistant's API that takes some effort out of life. Core functions currently available:
  - Memories (fuzzy search, create/recall/destroy)
@@ -27,15 +27,15 @@ Not too dissimilar is the WebTools.py file, the only major difference being that
 
 Setup
 ----
-You'll need to add a file `tokens.txt` in the top directory in order for it to run. At the moment the names are a bit dumb but I'll change that very soon.
+You'll need to create the file `tokens.txt` in the top directory in order for it to run. Use the `token_template.txt` file as a guide.
 
 The tokens are:
- - `user id` your discord user ID (enable developer mode in discord if you haven't already - then click your pfp bottom left)
- - `discord` your bot token
- - `openai` your openai api key
- - `assistant id` your assistant's id
- - `google` your google api key
- - `search` your custom search's context id
+ - `[Discord User ID]` - your discord user ID (enable developer mode in discord if you haven't already - then click your pfp bottom left)
+ - `[Discord Bot Token]` - your bot token
+ - `[Open AI API Key]` - your openai api key
+ - `[Assistant ID]` - your assistant's id
+ - `[Google API Token]` - your google api key
+ - `[Google Search Context]` - your custom search's context id
 
 Don't worry if you don't know how to get any of them, hopefully within June there will be a tutorial :)
 
