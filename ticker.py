@@ -1,6 +1,6 @@
 import asyncio
 import datetime
-from Tools import MemoryBank, ReminderBank, Embedding
+from Tools import MemoryBank, ReminderBank
 
 class Ticker:
   def __init__(self, reminderbank: ReminderBank.ReminderBank, memory: MemoryBank.MemoryBank, files: MemoryBank.MemoryBank, outqueue: asyncio.Queue):

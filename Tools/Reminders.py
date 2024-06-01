@@ -1,14 +1,9 @@
 import json
-import openai
-import Tools.Embedding
-import log
-import Tools.ReminderBank
-
-import os
-import pickle
 import datetime
 from typing import List
 
+import Tools.Embedding
+import Tools.ReminderBank
 import Tools.ToolCall  
      
       

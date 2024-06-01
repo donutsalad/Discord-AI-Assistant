@@ -1,11 +1,12 @@
-import openai
-import Tools.Embedding
-import Tools.ToolCall 
-
 import os
 import pickle
 import datetime
 from typing import List
+
+import openai
+
+import Tools.Embedding
+import Tools.ToolCall 
 
 class MemoryBank:
   def __init__(self, filename):

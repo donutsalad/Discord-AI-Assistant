@@ -1,10 +1,11 @@
-import openai
-import Tools.Embedding
-
 import os
 import pickle
 import datetime
 from typing import List
+
+import openai
+
+import Tools.Embedding
 
 class ReminderBank:
   def __init__(self, filename):

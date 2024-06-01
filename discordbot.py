@@ -1,5 +1,6 @@
 import asyncio
 import discord
+
 import log
 
 def SetupDiscordClient(aipiaqueue: asyncio.Queue, routerqueue: asyncio.Queue, user_id: int) -> discord.Client:
@@ -31,6 +32,7 @@ def SetupDiscordClient(aipiaqueue: asyncio.Queue, routerqueue: asyncio.Queue, us
     if message.author.id != user_id:
       return
     
+    #Overload if you'd like - probably not going to use this for a while
     if message.content.startswith("!"):
       log.EscapedIncomingMessage(message)
       return
@@ -40,7 +42,7 @@ def SetupDiscordClient(aipiaqueue: asyncio.Queue, routerqueue: asyncio.Queue, us
       await aipiaqueue.put(message)
       
     except Exception as e:
-      await message.channel.send("Please let me (the user) know when you saw this. There's an error in the discord bot code!")
+      await message.channel.send("Please let me (Isabelle) know when you saw this. There's an error in the discord bot code!")
       print("Specific error:")
       print(e)
       

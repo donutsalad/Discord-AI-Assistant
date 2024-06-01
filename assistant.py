@@ -1,8 +1,9 @@
 import os
-import openai
-import discord
 import asyncio
 import datetime
+
+import openai
+import discord
 
 import log
 import Tools
@@ -26,17 +27,18 @@ class OpenAIChatHandler:
   def __init__(self, queue: asyncio.Queue, toolmanager: Tools.ToolManager.ToolManager, discord: discord.Client, openai_key: str, assistant_id: str, user_id: int):
     self.queue = queue
     
+    self.run = None
+    self.ended = True
+    
     self.toolmanager = toolmanager
     
     self.discord = discord
     self.user_id = user_id
     self.discorduser = self.discord.get_user(self.user_id)
     
-    self.run = None
-    self.ended = True
-    
     self.openai_key = openai_key
     self.asssistant_id = assistant_id
+    
     self.client = openai.OpenAI(api_key = openai_key)
     self.assistant = self.client.beta.assistants.retrieve(assistant_id)
     
@@ -80,7 +82,7 @@ class OpenAIChatHandler:
   async def delete_thread(self):
     self.client.beta.threads.delete(self.run.thread_id)
     self.run.thread_id = None
-    self.ended = True  # Set self.ended to True when thread is deleted
+    self.ended = True
     log.ThreadDeleted()
     await self.discord.change_presence(status = discord.Status.idle, activity = discord.CustomActivity(name = "Counting electric sheep zzz"))
     print("Thread ended.")
@@ -119,7 +121,6 @@ class OpenAIChatHandler:
       await self.await_responce()
       
     return True
-  
   
   async def handle_run(self, dmessage: discord.Message, newthr):
     
@@ -167,7 +168,6 @@ class OpenAIChatHandler:
         
       await self.await_responce()
         
-  
   async def handle_tool_call(self, run, user):
   
     results = []
@@ -190,22 +190,22 @@ class OpenAIChatHandler:
     code_block_open = False
 
     for line in message.splitlines(keepends=True):
-        if len(chunk) + len(line) <= limit:
-            chunk += line
-            if line.startswith("```"):
-                code_block_open = not code_block_open
+      if len(chunk) + len(line) <= limit:
+        chunk += line
+        if line.startswith("```"):
+          code_block_open = not code_block_open
+      else:
+        if code_block_open and not chunk.endswith("```\n"):
+          chunk += "```\n"
+        chunks.append(chunk)
+        chunk = ""
+        if line.startswith("```"):
+          code_block_open = not code_block_open
+          chunk = line
         else:
-            if code_block_open and not chunk.endswith("```\n"):
-                chunk += "```\n"
-            chunks.append(chunk)
-            chunk = ""
-            if line.startswith("```"):
-                code_block_open = not code_block_open
-                chunk = line
-            else:
-                chunk = line
-            if code_block_open:
-                chunk += "```"  # reopen the code block in the new chunk
+          chunk = line
+        if code_block_open:
+          chunk += "```"  # reopen the code block in the new chunk
 
     if code_block_open and not chunk.endswith("```\n"):
         chunk += "```\n"
@@ -225,8 +225,6 @@ class OpenAIChatHandler:
           #print("waiting for responce...")
           await asyncio.sleep(0.35)
           
-        #case _:
-      #print(f"Waiting in state {self.run.status}")
       self.run = self.client.beta.threads.runs.retrieve(thread_id = self.run.thread_id, run_id = self.run.id)
 
     

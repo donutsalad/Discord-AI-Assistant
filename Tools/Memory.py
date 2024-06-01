@@ -1,14 +1,9 @@
 import json
-import openai
-import Tools.Embedding
-
-import os
-import pickle
-import datetime
 from typing import List
 
 import log
 import Tools.ToolCall  
+import Tools.Embedding
     
     
 def create_memory(tool_call: Tools.ToolCall.ToolCall) -> str:

@@ -1,5 +1,5 @@
-import wikipedia
 import json
+import wikipedia
 import Tools.ToolCall
 
 def SearchWikipedia(tool_call: Tools.ToolCall.ToolCall) -> str:

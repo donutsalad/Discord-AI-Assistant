@@ -1,9 +1,7 @@
-import requests
-from bs4 import BeautifulSoup, ResultSet
+import json
 from googleapiclient.discovery import build
 
 import Tools.ToolCall 
-import json
 import Tools.GoogleSearch
 import Tools.WebTools
 import Tools.WebTool

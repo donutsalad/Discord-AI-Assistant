@@ -24,7 +24,6 @@ async def main():
   with open("tokens.txt", "r") as f:
     while aquired < 4:
       line = f.readline()
-      
       if line.startswith("[Discord Bot Token]"):
         discord_token = f.readline().rstrip("\n")
         aquired += 1

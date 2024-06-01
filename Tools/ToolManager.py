@@ -1,7 +1,10 @@
-import openai
-import asyncio
+import json
 import discord
 
+import log
+import ticker
+
+import Tools
 import Tools.Dropbox
 import Tools.NCBI
 import Tools.PhysOrg
@@ -9,13 +12,6 @@ import Tools.SearchGoogle
 import Tools.WebTools
 import Tools.Wikipedia
 import Tools.Youtube
-import log
-import ticker
-import Tools
-
-import json
-import datetime
-
 import Tools.Embedding
 import Tools.MemoryBank
 import Tools.ReminderBank
