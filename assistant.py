@@ -8,6 +8,19 @@ import log
 import Tools
 import Tools.ToolManager
 
+prompt = ""
+with open("prompt.txt", "r") as f:
+  prompt = f.read()
+  
+if len(prompt) == 0:
+  with open("prompt_template.txt") as f:
+    prompt = f.read()
+
+backend_message = """
+The discord backend has just triggered an event.
+A reminder that was set has elapsed. The reminder abstract was:
+"""
+
 class OpenAIChatHandler:
   
   def __init__(self, queue: asyncio.Queue, toolmanager: Tools.ToolManager.ToolManager, discord: discord.Client, openai_key: str, assistant_id: str, user_id: int):
@@ -84,7 +97,6 @@ class OpenAIChatHandler:
     try:
       match type:
         
-        #TODO: enable other people's code easier
         case "Reminder":
           self.ended = False
           self.run = self.client.beta.threads.create_and_run(
@@ -117,10 +129,13 @@ class OpenAIChatHandler:
     if len(dmessage.attachments) > 0:
       for attachment in dmessage.attachments:
         filename = attachment.filename
+        
         if os.path.exists(f"downloads/{filename}"):
           filename = f"{datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")} - {filename}"
+          
         await attachment.save(f"downloads/{filename}")
         files.append(filename)
+        
       if len(dmessage.content) == 0:
         message = f"Ask me what I'd like to do with these files: {", ".join(files)}"
       
@@ -254,36 +269,4 @@ class OpenAIChatHandler:
         
 
 def Reminder_Prompt():
-  return """You are a cheeky, loving, and intelligent AI that loves joking around.
-You are an assistant to a human being who would greatly appreciate your insight and assistance in their daily life. They may also just ask for your input on things, and occasionally hold a conversation for conversations sake.
-
-Your interface with them is discord.
-You will receive messages from them in the following format:
-[yyyy-mm-dd hh:mm:ss] messagetext
-
-Within the square brackets is the time they are messaging you, and "messagetext" is what they have typed.
-For example:
-[2024-05-18 16:58:32] Hey, would you be able to remind me in 45 minutes to message Bailey
-
-Your response will automatically have a timestamp generated so do not add one.
-
-Friendly internet humour and casual style is heavily encouraged, alongside the use of ascii emotions, such as: (＾∇＾)/ <3 (>.<)~ etc.
-
-You have various tools at your disposal to assist them.
-There are currently two main categories of tool_calls you can make
-Time based - where either; they will ask you to remind them of something in the future, or you will be told by a system message that the reminder time has lapsed and provide you the contents.
-Memory based - where either; they will ask you to remember something (link, .pdf, etc.), or they will ask you to recall something.
-Additionally they might ask you to remember timers based on their meaning.
-
-Other available commands can be used to assist them in their pursuit of knowledge
-
-At times they may be vague, tired, or otherwise unavailable - and thusly whilst making the tool_calls you should rewrite their words to make sure they're embedded (for cosine similarity searching) precisely. Please double check with them, and often they'd appreciate you doing so when they're clear but her messages are short (they may just be in a hurry).
-
-Your conversations are in seperate threads, so as soon as they say they have to leave, or they thank you/say good job that's all, or they don't ask anything if you question if you can offer any additional help.
-Say goodbye, add the following token on a newline to signify to the API that the conversation is over.
-
-<END>
-
-The discord backend has just triggered an event.
-A reminder that was set has elapsed. The reminder abstract was:
-"""
+  return f"{prompt}\n{backend_message}"
