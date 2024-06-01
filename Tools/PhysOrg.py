@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup, ResultSet
 from googleapiclient.discovery import build
 
-import Tools.ToolCall 
+import Tools.WebTool
 import json
 
 headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
@@ -61,23 +61,23 @@ def ReadPhysOrgArticle(url: str):
     ]
 
   
-def get_latest_phys_articles(tool_call: Tools.ToolCall.ToolCall):
+def get_latest_phys_articles(web_tool: Tools.WebTool.WebTool):
     return json.dumps({
         "Instruction": "Give a summary of the available news stories to the user",
         "Entries": GetLatestPhysOrg()
     })
   
 
-def search_physorg_articles(tool_call: Tools.ToolCall.ToolCall):
+def search_physorg_articles(web_tool: Tools.WebTool.WebTool):
     return json.dumps({
         "Instruction": "Give a summary of the available news stories to the user",
-        "Entries": SearchPhysOrgArticles(tool_call.args["Query"])
+        "Entries": SearchPhysOrgArticles(web_tool.paramone)
     })
 
   
-def read_physorg_article(tool_call: Tools.ToolCall.ToolCall):
+def read_physorg_article(web_tool: Tools.WebTool.WebTool):
     return json.dumps({
         "Instruction": "Give a summary of the available news stories to the user",
-        "Paragraphs": ReadPhysOrgArticle(tool_call.args["URL"])
+        "Paragraphs": ReadPhysOrgArticle(web_tool.paramone)
     })
   

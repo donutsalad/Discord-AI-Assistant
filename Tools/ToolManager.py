@@ -5,6 +5,7 @@ import discord
 import Tools.NCBI
 import Tools.PhysOrg
 import Tools.SearchGoogle
+import Tools.WebTools
 import Tools.Wikipedia
 import Tools.Youtube
 import log
@@ -31,21 +32,21 @@ tool_list = [
   {"tool_id": "forget_memory", "method": Tools.Memory.forget_memory},
   {"tool_id": "recall_memory", "method": Tools.Memory.recall_memory},
   
-  {"tool_id": "search_youtube", "method": Tools.Youtube.GetYoutubeVideos},
-  {"tool_id": "get_youtube_transcript", "method": Tools.Youtube.GetYoutubeTranscript},
-
-  {"tool_id": "get_latest_physorg_articles", "method": Tools.PhysOrg.get_latest_phys_articles},
-  {"tool_id": "search_physorg_articles", "method": Tools.PhysOrg.search_physorg_articles},
-  {"tool_id": "read_physorg_article", "method": Tools.PhysOrg.read_physorg_article},
+  #Core Web Functions
+  {"tool_id": "get_webtools", "method": Tools.WebTools.GetAvailableWebTools},
+  {"tool_id": "call_webtool", "method": Tools.WebTools.CallWebTool},
 
   {"tool_id": "search_google", "method": Tools.SearchGoogle.SearchGoogle},
   {"tool_id": "read_page_from_google", "method": Tools.SearchGoogle.ReadPageFromGoogle},
   
-  
-  #Example Functions
+  {"tool_id": "search_youtube", "method": Tools.Youtube.GetYoutubeVideos},
+  {"tool_id": "get_youtube_transcript", "method": Tools.Youtube.GetYoutubeTranscript},
+
   {"tool_id": "get_wikipedia_page", "method": Tools.Wikipedia.SearchWikipedia},
   {"tool_id": "get_wikipedia_references", "method": Tools.Wikipedia.GetWikipediaReferences},
-
+  
+  
+  #Example Function
   {"tool_id": "search_ncbi", "method": Tools.NCBI.search_ncbi},
   {"tool_id": "read_ncbi", "method": Tools.NCBI.read_ncbi}
 ]

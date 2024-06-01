@@ -1,0 +1,26 @@
+{
+  "name": "call_webtool",
+  "description": "This function takes the URL provided, and returns the content of the article.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "tool_id": {
+        "type": "string",
+        "description": "The ID of the Web Tool to be directed too."
+      },
+      "ParameterOne": {
+        "type": "string",
+        "description": "The first parameter as described by get_webtools."
+      },
+      "ParameterTwo": {
+        "type": "string",
+        "description": "The second parameter as described by get_webtools."
+      }
+    },
+    "required": [
+      "URL",
+      "ParameterOne",
+      "ParameterTwo"
+    ]
+  }
+}

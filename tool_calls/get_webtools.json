@@ -1,0 +1,9 @@
+{
+  "name": "get_webtools",
+  "parameters": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "description": "This function exposes all available web_tools and provides a description for how to use each. Call this function when a user requests any web interfacing that isn't directly available as a tool_call."
+}
