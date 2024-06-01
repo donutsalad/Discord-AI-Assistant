@@ -168,7 +168,35 @@ class OpenAIChatHandler:
     
     await self.await_responce()
     
-        
+  #Actually written by the bot lmao - i'm lazy
+  def chunk_message(self, message, limit = 2000):
+    chunks = []
+    chunk = ""
+    code_block_open = False
+
+    for line in message.splitlines(keepends=True):
+        if len(chunk) + len(line) <= limit:
+            chunk += line
+            if line.startswith("```"):
+                code_block_open = not code_block_open
+        else:
+            if code_block_open and not chunk.endswith("```\n"):
+                chunk += "```\n"
+            chunks.append(chunk)
+            chunk = ""
+            if line.startswith("```"):
+                code_block_open = not code_block_open
+                chunk = line
+            else:
+                chunk = line
+            if code_block_open:
+                chunk += "```"  # reopen the code block in the new chunk
+
+    if code_block_open and not chunk.endswith("```\n"):
+        chunk += "```\n"
+    chunks.append(chunk)
+    return chunks
+      
   #Used by starting new thread, opening new thread, and continuing - including tool calls
   async def await_responce(self):
     
@@ -203,14 +231,14 @@ class OpenAIChatHandler:
         if "<END>" in result[-5:]:
           final = True
           result = result[:-5]
-        
-        #TODO: handle ``` and markdown overflow
-        start = 0
-        while start < len(result): #courtesy of aipia herself <3
-          end = min(start + 2000, len(result))
-          chunk = result[start:end]
-          await self.discorduser.dm_channel.send(chunk)
-          start += 2000
+          
+        if len(result) < 1999:
+          await self.discorduser.dm_channel.send(result)
+          
+        else:
+          chunks = self.chunk_message(result)
+          for chunk in chunks:
+            await self.discorduser.dm_channel.send(chunk)
           
         if final:
           print("Thread ending from end token.")
