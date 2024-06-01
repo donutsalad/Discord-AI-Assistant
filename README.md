@@ -20,6 +20,8 @@ Included Demo Functions
     - Phys.org (get the latest articles, search, and read an article)
     - NeuroscienceNews.com (get the latest articles, search, and read an article)
 
+Extending Functionality
+----
 I plan to make a video tutorial on how to create your own command but the tl;dr is create your own function and import it in ToolManager.py
 and then create an entry in the list of available tools with "tool_id" being the assistant's json (on openai platform) and "method" being a reference to your function
 
@@ -28,6 +30,8 @@ Not too dissimilar is the WebTools.py file, the only major difference being that
 
 Setup
 ----
+To make sure you have all the libraries utilised in this project run:
+`pip install asyncio numpy scipy openai discord.py google-api-python-client beautifulsoup4`
 You'll need to create the file `tokens.txt` in the top directory in order for it to run. Use the `token_template.txt` file as a guide.
 
 The tokens are:
