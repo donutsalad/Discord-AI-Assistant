@@ -1,0 +1,16 @@
+{
+  "name": "upload_dropbox_file",
+  "description": "This function uploads the file given by FileName from the dropbox folder.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "FileName": {
+        "type": "string",
+        "description": "The file of their choice."
+      }
+    },
+    "required": [
+      "FileName"
+    ]
+  }
+}

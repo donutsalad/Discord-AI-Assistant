@@ -2,6 +2,7 @@ import openai
 import asyncio
 import discord
 
+import Tools.Dropbox
 import Tools.NCBI
 import Tools.PhysOrg
 import Tools.SearchGoogle
@@ -22,6 +23,7 @@ import Tools.Reminders
 import Tools.Memory
 import Tools.Files
 import Tools.Reminders
+import Tools.Dropbox
 import Tools.ToolCall
 
 tool_list = [
@@ -36,6 +38,9 @@ tool_list = [
   {"tool_id": "create_file_memory", "method": Tools.Files.create_file_memory},
   {"tool_id": "forget_file_memory", "method": Tools.Files.forget_file_memory},
   {"tool_id": "recall_file_memory", "method": Tools.Files.recall_file_memory},
+  
+  {"tool_id": "list_dropbox_files", "method": Tools.Dropbox.list_dropbox_files},
+  {"tool_id": "upload_dropbox_file", "method": Tools.Dropbox.upload_dropbox_file},
   
   #Core Web Functions
   {"tool_id": "get_webtools", "method": Tools.WebTools.GetAvailableWebTools},

@@ -1,0 +1,10 @@
+{
+  "name": "list_dropbox_files",
+  "parameters": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+
+  "description": "Lists all files within the dropbox."
+}

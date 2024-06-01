@@ -164,3 +164,9 @@ data/reminders*
 data/files*
 data/log*
 tokens.txt
+
+downloads/*
+dropbox/*
+
+!downloads/README.md
+!dropbox/README.md
