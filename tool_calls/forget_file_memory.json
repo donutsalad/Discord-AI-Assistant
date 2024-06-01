@@ -1,0 +1,16 @@
+{
+  "name": "forget_file_memory",
+  "description": "This function removes the file memory from the upload database with the abstract closest to the abstract provided.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "Abstract": {
+        "type": "string",
+        "description": "All of the information that is available that would be as similar to the original file description abstract as possible."
+      }
+    },
+    "required": [
+      "Abstract"
+    ]
+  }
+}

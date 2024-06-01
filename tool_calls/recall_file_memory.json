@@ -1,0 +1,21 @@
+{
+  "name": "recall_file_memory",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "Abstract": {
+        "type": "string",
+        "description": "All of the information that is available that would be as similar to the original abstract as possible."
+      },
+      "Count": {
+        "type": "integer",
+        "description": "How many matches to return."
+      }
+    },
+    "required": [
+      "Abstract",
+      "Count"
+    ]
+  },
+  "description": "Use this command when a user asks you to upload or find a file, or if they ask to download a file. If the count is 1 the file will be uploaded. If the count is not 1 please request again if the user confirms the file they'd like."
+}

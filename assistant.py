@@ -1,3 +1,4 @@
+import os
 import openai
 import discord
 import asyncio
@@ -108,7 +109,22 @@ class OpenAIChatHandler:
     return True
   
   
-  async def handle_run(self, dmessage, newthr):
+  async def handle_run(self, dmessage: discord.Message, newthr):
+    
+    message = dmessage.content
+    files = []
+    
+    if len(dmessage.attachments) > 0:
+      for attachment in dmessage.attachments:
+        filename = attachment.filename
+        if os.path.exists(f"downloads/{filename}"):
+          filename = f"{datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")} - {filename}"
+        await attachment.save(f"downloads/{filename}")
+        files.append(filename)
+      if len(dmessage.content) == 0:
+        message = f"Ask me what I'd like to do with these files: {", ".join(files)}"
+      
+      message = f"{message} | attached files: {", ".join(files)}"
     
     async with dmessage.channel.typing():
       
@@ -117,7 +133,7 @@ class OpenAIChatHandler:
           assistant_id = self.assistant.id,
           thread={
             "messages": [
-              {"role": "user", "content": f"[{datetime.datetime.now().strftime("%Y-%m-%d, %H:%M:%S")}] {dmessage.content}"}
+              {"role": "user", "content": f"[{datetime.datetime.now().strftime("%Y-%m-%d, %H:%M:%S")}] {message}"}
             ]
           }
         )
@@ -129,7 +145,7 @@ class OpenAIChatHandler:
           additional_messages = [
               {
                 "role": "user",
-                "content": f"[{datetime.datetime.now().strftime("%Y-%m-%d, %H:%M:%S")}] {dmessage.content}"
+                "content": f"[{datetime.datetime.now().strftime("%Y-%m-%d, %H:%M:%S")}] {message}"
               }
             ]
         )
@@ -137,11 +153,11 @@ class OpenAIChatHandler:
       await self.await_responce()
         
   
-  async def handle_tool_call(self, run):
+  async def handle_tool_call(self, run, user):
   
     results = []
     for tool in run.required_action.submit_tool_outputs.tool_calls:
-      result = await self.toolmanager.handle_tool_call(tool, self.client)
+      result = await self.toolmanager.handle_tool_call(tool, self.client, self.discorduser)
       results.extend(result)
       
     self.run = self.client.beta.threads.runs.submit_tool_outputs(
@@ -202,7 +218,7 @@ class OpenAIChatHandler:
         return
       
       case "requires_action":
-        await self.handle_tool_call(self.run)
+        await self.handle_tool_call(self.run, self.discorduser)
       
       case _:
         await self.discorduser.dm_channel.send(f"Unhandled state from normal messages. ({self.run.status})")

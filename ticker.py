@@ -3,9 +3,10 @@ import datetime
 from Tools import MemoryBank, ReminderBank, Embedding
 
 class Ticker:
-  def __init__(self, reminderbank: ReminderBank.ReminderBank, memory: MemoryBank.MemoryBank, outqueue: asyncio.Queue):
-    self.bank = reminderbank
+  def __init__(self, reminderbank: ReminderBank.ReminderBank, memory: MemoryBank.MemoryBank, files: MemoryBank.MemoryBank, outqueue: asyncio.Queue):
+    self.reminders = reminderbank
     self.memory = memory
+    self.files = files
 
     self.outqueue = outqueue
     
@@ -15,16 +16,17 @@ class Ticker:
     while True:
       now = datetime.datetime.now()
         
-      triggered = self.bank.CheckTriggered(now)
+      triggered = self.reminders.CheckTriggered(now)
       for trigger in triggered:
         await self.outqueue.put(trigger)
-        self.bank.RemoveReminder(trigger)
+        self.reminders.RemoveReminder(trigger)
         
       if now > savetime:
         
         try:
-          self.bank.Save()
+          self.reminders.Save()
           self.memory.Save()
+          self.files.Save()
           savetime = now + datetime.timedelta(minutes = 30)
           
         except Exception as e:
