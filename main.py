@@ -24,17 +24,18 @@ async def main():
   with open("tokens.txt", "r") as f:
     while aquired < 4:
       line = f.readline()
-      if line.startswith("discord: "):
-        discord_token = line[9:].rstrip("\n")
+      
+      if line.startswith("[Discord Bot Token]"):
+        discord_token = f.readline().rstrip("\n")
         aquired += 1
-      elif line.startswith("user id: "):
-        user_id = int(line[9:].rstrip("\n"))
+      elif line.startswith("[Discord User ID]"):
+        user_id = int(f.readline().rstrip("\n"))
         aquired += 1
-      elif line.startswith("openai: "):
-        openai_key = line[8:].rstrip("\n")
+      elif line.startswith("[Open AI API Key]"):
+        openai_key = f.readline().rstrip("\n")
         aquired += 1
-      elif line.startswith("assistant id: "):
-        assistant_id = line[14:].rstrip("\n")
+      elif line.startswith("[Assistant ID]"):
+        assistant_id = f.readline().rstrip("\n")
         aquired += 1
       else: raise Exception("Unrecognised token")
   

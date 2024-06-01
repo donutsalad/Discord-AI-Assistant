@@ -1,0 +1,12 @@
+[Discord User ID]
+<uid> (int)
+[Discord Bot Token]
+<token> (str)
+[Open AI API Key]
+<sk-proj-etc> (str)
+[Assistant ID]
+<asst_etc> (str)
+[Google API Token]
+<token> (str)
+[Google Search Context]
+<ctx> (str)

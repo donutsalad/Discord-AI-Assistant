@@ -9,11 +9,11 @@ aquired = 0
 with open("tokens.txt") as f:
   while aquired < 2:
     line = f.readline()
-    if line.startswith("google: "):
-      my_api_key = line[8:].rstrip("\n")
+    if line.startswith("[Google API Token]"):
+      my_api_key = f.readline().rstrip("\n")
       aquired += 1
-    elif line.startswith("search: "):
-      my_cse_id = line[8:].rstrip("\n")
+    elif line.startswith("[Google Search Context]"):
+      my_cse_id = f.readline().rstrip("\n")
       aquired += 1
       
 def google_search(search_term, api_key, cse_id, num, **kwargs):
