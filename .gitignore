@@ -159,8 +159,8 @@ cython_debug/
 #.idea/
 .DS_Store
 
-memories*
-reminders*
-files*
-log*
+data/memories*
+data/reminders*
+data/files*
+data/log*
 tokens.txt
