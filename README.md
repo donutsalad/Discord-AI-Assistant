@@ -4,7 +4,8 @@
 A personal assistant based around GPT4o and the assistant's API that takes some effort out of life. Core functions currently available:
  - Memories (fuzzy search, create/recall/destroy)
  - Reminders (fuzzy search, create/find/list/destroy)
- - Files (fuzzy search, download/upload/destroy) \[Rudimentary - save and delete through discord only. (stored in downloads folder)\]
+ - Files (fuzzy search, store/upload/destroy) \[Saves the CDN link for attachments.\]
+   - Additionally saves the file to downloads folder 
  - Dropbox (simple glob listing for the dropbox folder, list/upload)
  - WebTools (list, call, and view generic page, and read all \<p\>'s from a url)
  - Wikipedia (get page content, get references)
