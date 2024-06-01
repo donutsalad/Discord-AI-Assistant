@@ -5,5 +5,5 @@
     "properties": {},
     "required": []
   },
-  "description": "This function exposes all available web_tools and provides a description for how to use each. Call this function when a user requests any web interfacing that isn't directly available as a tool_call."
+  "description": "This lists all internet functions available - if a user has specified access to functions other than wikipedia, youtube, or google - call this function to display all web tools."
 }

@@ -6,6 +6,7 @@ import Tools.ToolCall
 import json
 import Tools.GoogleSearch
 import Tools.WebTools
+import Tools.WebTool
   
 def SearchGoogle(tool_call: Tools.ToolCall.ToolCall):
   
@@ -16,4 +17,4 @@ def SearchGoogle(tool_call: Tools.ToolCall.ToolCall):
   
   
 def ReadPageFromGoogle(tool_call: Tools.ToolCall.ToolCall):
-  return json.dumps(Tools.WebTools.ReadGenericPage(tool_call.args["URL"]))
+  return json.dumps(Tools.WebTools.ReadGenericPage(Tools.WebTools.read_generic_page(Tools.WebTool.WebTool("", "", tool_call.args["URL"], ""))))

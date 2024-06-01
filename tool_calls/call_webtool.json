@@ -1,6 +1,5 @@
 {
   "name": "call_webtool",
-  "description": "This function takes the URL provided, and returns the content of the article.",
   "parameters": {
     "type": "object",
     "properties": {
@@ -22,5 +21,6 @@
       "ParameterOne",
       "ParameterTwo"
     ]
-  }
+  },
+  "description": "This function calls the web tool as specified in get_webtools."
 }
