@@ -1,7 +1,13 @@
 # Discord AI Assistant
-### Detailed README coming soon.
+### Detailed Tutorial and step by step README coming soon.
 
-A personal assistant based around GPT4o and the assistant's API that takes some effort out of life. Core functions currently available:
+A personal assistant based around GPT4o and the assistant's API that takes some effort out of life.
+
+One thing to note: conversations (threads) are terminated by an `<END>` token the prompt signifies to the assistant.
+The benifit is that you don't wrack up input tokens to hold context. If the bot says "Counting electric sheep zzz" that means there is no live thread.
+If you've asked it to summarise an article or generate code, and you don't need that context but you'd like to read another article etc, either say thanks that's all, or directly ask the assistant to terminate the thread.
+
+Core functions currently available:
  - Memories (fuzzy search, create/recall/destroy)
  - Reminders (fuzzy search, create/find/list/destroy)
  - Files (fuzzy search, store/upload/destroy) \[Saves the CDN link for attachments.\]
@@ -49,3 +55,5 @@ Don't worry if you don't know how to get any of them, hopefully within June ther
 
 Feel free to hit me up in the meantime if you have any questions, might take me some time to get back to you but happy to help!
 I'm all about making life easier :)
+
+(donutsalad on discord)
