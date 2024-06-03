@@ -16,7 +16,7 @@ def ReadGenericPage(web_tool: Tools.WebTool.WebTool):
   html = requests.get(url, headers = headers).text
   soup = BeautifulSoup(html, features="html.parser")
 
-  results: ResultSet = soup.find_all("p")
+  results: ResultSet = soup.find_all(string = True)
   
   return [
     entry.text
