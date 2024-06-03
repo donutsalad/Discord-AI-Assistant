@@ -8,14 +8,17 @@
           "type": "string",
           "description": "The search query the user has provided."
         },
+        "SearchTools": {
+          "type": "string",
+          "description": "Google search refinement such as \"site:stackexchange.org OR site:stackoverflow.com\" that limits searches to specific sites."
+        },
         "Count": {
           "type": "integer",
           "description": "This should be 1 if the user wants the top result, otherwise the number of results they'd like."
         }
       },
       "required": [
-        "Query",
-        "Count"
+        "Query"
       ]
     }
   }

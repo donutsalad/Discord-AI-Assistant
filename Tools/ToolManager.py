@@ -6,8 +6,8 @@ import ticker
 
 import Tools
 import Tools.Dropbox
-import Tools.NCBI
-import Tools.PhysOrg
+import Tools.Web.NCBI
+import Tools.Web.PhysOrg
 import Tools.SearchGoogle
 import Tools.WebTools
 import Tools.Wikipedia
@@ -49,12 +49,7 @@ tool_list = [
   {"tool_id": "get_youtube_transcript", "method": Tools.Youtube.GetYoutubeTranscript},
 
   {"tool_id": "get_wikipedia_page", "method": Tools.Wikipedia.SearchWikipedia},
-  {"tool_id": "get_wikipedia_references", "method": Tools.Wikipedia.GetWikipediaReferences},
-  
-  
-  #Example Function
-  {"tool_id": "search_ncbi", "method": Tools.NCBI.search_ncbi},
-  {"tool_id": "read_ncbi", "method": Tools.NCBI.read_ncbi}
+  {"tool_id": "get_wikipedia_references", "method": Tools.Wikipedia.GetWikipediaReferences}
 ]
 
 class ToolManager:
