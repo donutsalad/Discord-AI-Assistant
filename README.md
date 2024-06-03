@@ -13,18 +13,17 @@ Core functions currently available:
  - Files (fuzzy search, store/upload/destroy) \[Saves the CDN link for attachments.\]
    - Additionally saves the file to downloads folder 
  - Dropbox (simple glob listing for the dropbox folder, list/upload)
- - WebTools (list, call, and view generic page, and read all \<p\>'s from a url)
+ - WebTools (list, call, read all text from generic page)
  - Wikipedia (get page content, get references)
  - Youtube (search youtube, get transcript)
- - Google (search google, read page \[using webtools generic page function\])
+ - Google (search google, read page)
+   - Conditionals to catch websites that can be read in specific ways like stackoverflow or ncbi.
 
 Web Tools are a way to create more functionality interfacing with websites and other functions in a way that doesn't clog up the function set in your assistant.
 This way it enables you to add a bunch of web functions, that are only exposed to the bot when needed.
 
 Included Demo Functions
 ----
- - Normal Function:
-    - NCBI (search NCBI, get main text with a `/?report=printable`)
  - Web Tool Functions:
     - Phys.org (get the latest articles, search, and read an article)
     - NeuroscienceNews.com (get the latest articles, search, and read an article)
