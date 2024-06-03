@@ -23,8 +23,8 @@ def ReadGenericPage(web_tool: Tools.WebTool.WebTool):
     for entry in results
   ]
   
-def read_generic_page(tool_call: Tools.ToolCall.ToolCall):
-  return json.dumps(ReadGenericPage(tool_call.args["ParameterOne"]))
+def read_generic_page(web_tools: Tools.WebTool.WebTool):
+  return json.dumps(ReadGenericPage(web_tools))
 
 webtools = [
   {"tool_id": "generic_read_page", "description": "Read a webpage that isn't implemented specifically", "ParameterOne": "URL of the webpage", "ParameterTwo": "None", "method": read_generic_page},
