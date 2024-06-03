@@ -1,0 +1,10 @@
+openai
+discord.py
+numpy
+scipy
+scikit-learn
+beautifulsoup4
+google-search-python-api
+wikipedia
+youtube-search-python
+youtube-transcript-api

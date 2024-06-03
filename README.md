@@ -39,8 +39,7 @@ Not too dissimilar is the WebTools.py file, the only major difference being that
 
 Setup
 ----
-To make sure you have all the libraries utilised in this project run:
-`pip install asyncio numpy scipy openai discord.py google-api-python-client beautifulsoup4`
+To make sure you have all the libraries utilised in this project install the libraries requirements.txt
 You'll need to create the file `tokens.txt` in the top directory in order for it to run. Use the `token_template.txt` file as a guide.
 
 The tokens are:
