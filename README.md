@@ -30,6 +30,8 @@ Included Demo Functions
  - Web Tool Functions:
     - Phys.org (get the latest articles, search, and read an article)
     - NeuroscienceNews.com (get the latest articles, search, and read an article)
+  - Custom Tool Functions:
+    - Read PDF (read the contents of a PDF in the downloads folder)
 
 Extending Functionality
 ----
@@ -38,6 +40,7 @@ and then create an entry in the list of available tools with "tool_id" being the
 
 Not too dissimilar is the WebTools.py file, the only major difference being that you include a description of the tool and generic parameters, and your tool recieves a `WebTool` object instead of a `ToolCall` object.
 
+Same goes for the CustomTools.py file, with a `CustomTool` object passed instead.
 
 Setup
 ----
