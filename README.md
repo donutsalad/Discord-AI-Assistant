@@ -14,6 +14,7 @@ Core functions currently available:
    - Additionally saves the file to downloads folder 
  - Dropbox (simple glob listing for the dropbox folder, list/upload)
  - WebTools (list, call, read all text from generic page)
+ - CustomTools (list and call)
  - Wikipedia (get page content, get references)
  - Youtube (search youtube, get transcript)
  - Google (search google, read page)
@@ -21,6 +22,8 @@ Core functions currently available:
 
 Web Tools are a way to create more functionality interfacing with websites and other functions in a way that doesn't clog up the function set in your assistant.
 This way it enables you to add a bunch of web functions, that are only exposed to the bot when needed.
+
+Custom Tools are not too dissimilar, except have four parameters instead of two.
 
 Included Demo Functions
 ----
