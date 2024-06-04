@@ -1,0 +1,36 @@
+{
+  "name": "call_customtool",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "tool_id": {
+        "type": "string",
+        "description": "The ID of the Custom Tool to be directed too."
+      },
+      "ParameterOne": {
+        "type": "string",
+        "description": "The first parameter as described by get_webtools."
+      },
+      "ParameterTwo": {
+        "type": "string",
+        "description": "The second parameter as described by get_webtools."
+      },
+      "ParameterThree": {
+        "type": "string",
+        "description": "The third parameter as described by get_webtools."
+      },
+      "ParameterFour": {
+        "type": "string",
+        "description": "The fourth parameter as described by get_webtools."
+      }
+    },
+    "required": [
+      "URL",
+      "ParameterOne",
+      "ParameterTwo",
+      "ParameterThree",
+      "ParameterFour"
+    ]
+  },
+  "description": "This function calls the web tool as specified in get_customtools."
+}

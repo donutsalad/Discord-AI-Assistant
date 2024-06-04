@@ -6,10 +6,9 @@ import ticker
 
 import Tools
 import Tools.Dropbox
-import Tools.Web.NCBI
-import Tools.Web.PhysOrg
 import Tools.SearchGoogle
 import Tools.WebTools
+import Tools.CustomTools
 import Tools.Wikipedia
 import Tools.Youtube
 import Tools.Embedding
@@ -37,6 +36,10 @@ tool_list = [
   
   {"tool_id": "list_dropbox_files", "method": Tools.Dropbox.list_dropbox_files},
   {"tool_id": "upload_dropbox_file", "method": Tools.Dropbox.upload_dropbox_file},
+  
+  #Custom Functions
+  {"tool_id": "get_customtools", "method": Tools.CustomTools.GetAvailableCustomTools},
+  {"tool_id": "call_customtool", "method": Tools.CustomTools.CallCustomTool},
   
   #Core Web Functions
   {"tool_id": "get_webtools", "method": Tools.WebTools.GetAvailableWebTools},

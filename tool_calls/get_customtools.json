@@ -1,0 +1,9 @@
+{
+  "name": "get_customtools",
+  "parameters": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "description": "This lists all custom functions available - if a user is asking for a function that is not otherwise available call this function."
+}
