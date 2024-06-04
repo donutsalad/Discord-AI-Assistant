@@ -8,3 +8,4 @@ google-search-python-api
 wikipedia
 youtube-search-python
 youtube-transcript-api
+pypdf
