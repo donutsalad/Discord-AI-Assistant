@@ -4,7 +4,7 @@ numpy
 scipy
 scikit-learn
 beautifulsoup4
-google-search-python-api
+google-api-python-client
 wikipedia
 youtube-search-python
 youtube-transcript-api

@@ -126,6 +126,7 @@ class OpenAIChatHandler:
     
     message = dmessage.content
     files = []
+    images = []
     
     if len(dmessage.attachments) > 0:
       for attachment in dmessage.attachments:
@@ -137,6 +138,9 @@ class OpenAIChatHandler:
         await attachment.save(f"downloads/{filename}")
         files.append(attachment.url)
         
+        if attachment.content_type in ('image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image.gif'):
+          images.append(attachment.url)
+        
       if len(dmessage.content) == 0:
         message = f"Ask me what I'd like to do with these file links: {", ".join(files)}"
       
@@ -144,27 +148,56 @@ class OpenAIChatHandler:
     
     async with dmessage.channel.typing():
       
-      if newthr == True:
-        self.run = self.client.beta.threads.create_and_run(
-          assistant_id = self.assistant.id,
-          thread={
-            "messages": [
-              {"role": "user", "content": f"[{datetime.datetime.now().strftime("%Y-%m-%d, %H:%M:%S")}] {message}"}
-            ]
-          }
-        )
-        
+      if len(images) != 0:
+        contents = []
+        contents.append({"type": "text", "text": f"[{datetime.datetime.now().strftime("%Y-%m-%d, %H:%M:%S")}] {message}"})
+        for img in images:
+          contents.append({"type": "image_url", "image_url": {"url": img}})
+          
+        if newthr == True:
+          self.run = self.client.beta.threads.create_and_run(
+            assistant_id = self.assistant.id,
+            thread={
+              "messages": [
+                {"role": "user", "content": contents}
+              ]
+            }
+          )
+          
+        else:
+          self.run = self.client.beta.threads.runs.create(
+            thread_id = self.run.thread_id,
+            assistant_id = self.assistant.id,
+            additional_messages = [
+                {
+                  "role": "user",
+                  "content": contents
+                }
+              ]
+          )
+      
       else:
-        self.run = self.client.beta.threads.runs.create(
-          thread_id = self.run.thread_id,
-          assistant_id = self.assistant.id,
-          additional_messages = [
-              {
-                "role": "user",
-                "content": f"[{datetime.datetime.now().strftime("%Y-%m-%d, %H:%M:%S")}] {message}"
-              }
-            ]
-        )
+        if newthr == True:
+          self.run = self.client.beta.threads.create_and_run(
+            assistant_id = self.assistant.id,
+            thread={
+              "messages": [
+                {"role": "user", "content": f"[{datetime.datetime.now().strftime("%Y-%m-%d, %H:%M:%S")}] {message}"}
+              ]
+            }
+          )
+          
+        else:
+          self.run = self.client.beta.threads.runs.create(
+            thread_id = self.run.thread_id,
+            assistant_id = self.assistant.id,
+            additional_messages = [
+                {
+                  "role": "user",
+                  "content": f"[{datetime.datetime.now().strftime("%Y-%m-%d, %H:%M:%S")}] {message}"
+                }
+              ]
+          )
         
       await self.await_responce()
         
