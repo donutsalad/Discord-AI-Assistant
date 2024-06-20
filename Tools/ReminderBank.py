@@ -34,7 +34,7 @@ class ReminderBank:
     if os.path.isfile(self.filename):
       
       if os.path.isfile(f"{self.filename}.backup"):
-        os.rename(f"{self.filename}.backup", f"{self.filename}.bkoa-{datetime.datetime.now().strftime("%d-%m-%Y-%H-%M")}")
+        os.remove(f"{self.filename}.backup")
         
       os.rename(self.filename, f"{self.filename}.backup")
     

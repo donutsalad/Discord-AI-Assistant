@@ -1,6 +1,4 @@
 import json
-import requests
-from bs4 import BeautifulSoup, ResultSet
 from googleapiclient.discovery import build
 
 import Tools.ToolCall 
@@ -23,18 +21,3 @@ def SearchGoogle(tool_call: Tools.ToolCall.ToolCall):
     query = f"{query} {tool_call.args["SearchTools"]}"
   
   return json.dumps(Tools.GoogleSearch.GetGoogleSearches("all", query, count))
-  
-  
-def ReadPageFromGoogle(tool_call: Tools.ToolCall.ToolCall):
-
-  if "stackoverflow.com" in tool_call.args["URL"] or "superuser.com" in tool_call.args["URL"] or "mathoverflow.new" in tool_call.args["URL"] or "serverfault.com" in tool_call.args["URL"]:
-    return json.dumps(Tools.Web.StackExchange.GetStackPage(tool_call.args["URL"]))
-  
-  if "pubmed.ncbi.nlm.nih.gov" in tool_call.args["URL"]:
-    return json.dumps(Tools.Web.NCBI.GetNCBIPage(tool_call.args["URL"]))
-  
-  if "phys.org" in tool_call.args["URL"]:
-    return json.dumps(Tools.Web.PhysOrg.ReadPhysOrgArticle(tool_call.args["URL"]))
-    
-  
-  return json.dumps(Tools.WebTools.ReadGenericPage(Tools.WebTool.WebTool("", "", tool_call.args["URL"], "")))

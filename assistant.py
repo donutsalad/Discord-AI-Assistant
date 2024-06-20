@@ -10,21 +10,56 @@ import Tools
 import Tools.ToolManager
 
 prompt = ""
-with open("prompt.txt", "r") as f:
-  prompt = f.read()
-  
-if len(prompt) == 0:
+if os.path.exists("prompt.txt"):
+  with open("prompt.txt", "r") as f:
+    prompt = f.read()
+else:
   with open("prompt_template.txt") as f:
     prompt = f.read()
-
-backend_message = """
+  
+Reminder_Message = """
 The discord backend has just triggered an event.
 A reminder that was set has elapsed. The reminder abstract was:
 """
+      
+def Reminder_Prompt():
+  return f"{prompt}\n{Reminder_Message}"
+    
+#Actually written by the bot lmao - i'm lazy
+def chunk_message(message, limit = 2000):
+  chunks = []
+  chunk = ""
+  code_block_open = False
+
+  for line in message.splitlines(keepends=True):
+    if len(chunk) + len(line) <= limit:
+      chunk += line
+      if line.startswith("```"):
+        code_block_open = not code_block_open
+    else:
+      if code_block_open and not chunk.endswith("```\n"):
+        chunk += "```\n"
+      chunks.append(chunk)
+      chunk = ""
+      if line.startswith("```"):
+        code_block_open = not code_block_open
+        chunk = line
+      else:
+        chunk = line
+      if code_block_open:
+        chunk += "```"  # reopen the code block in the new chunk
+
+  if code_block_open and not chunk.endswith("```\n"):
+      chunk += "```\n"
+  chunks.append(chunk)
+  return chunks
 
 class OpenAIChatHandler:
-  
-  def __init__(self, queue: asyncio.Queue, toolmanager: Tools.ToolManager.ToolManager, discord: discord.Client, openai_key: str, assistant_id: str, user_id: int):
+
+  def __init__(self, queue: asyncio.Queue, 
+               toolmanager: Tools.ToolManager.ToolManager, discord: discord.Client, 
+               openai_key: str, assistant_id: str, user_id: int):
+    
     self.queue = queue
     
     self.run = None
@@ -44,7 +79,7 @@ class OpenAIChatHandler:
     
   def get_discord_user(self):
     return self.discord.get_user(self.user_id)
-    
+
   async def waitloop(self):
     while True:
       
@@ -86,8 +121,7 @@ class OpenAIChatHandler:
     log.ThreadDeleted()
     await self.discord.change_presence(status = discord.Status.idle, activity = discord.CustomActivity(name = "Counting electric sheep zzz"))
     print("Thread ended.")
-  
-  
+    
   async def external_thread(self, type, information):
     
     if self.discorduser is None:
@@ -125,6 +159,7 @@ class OpenAIChatHandler:
   async def handle_run(self, dmessage: discord.Message, newthr):
     
     message = dmessage.content
+    
     files = []
     images = []
     
@@ -145,105 +180,56 @@ class OpenAIChatHandler:
         message = f"Ask me what I'd like to do with these file links: {", ".join(files)}"
       
       message = f"{message} | attached file links: {", ".join(files)}"
-    
-    async with dmessage.channel.typing():
       
-      if len(images) != 0:
-        contents = []
-        contents.append({"type": "text", "text": f"[{datetime.datetime.now().strftime("%Y-%m-%d, %H:%M:%S")}] {message}"})
-        for img in images:
-          contents.append({"type": "image_url", "image_url": {"url": img}})
-          
-        if newthr == True:
-          self.run = self.client.beta.threads.create_and_run(
-            assistant_id = self.assistant.id,
-            thread={
-              "messages": [
-                {"role": "user", "content": contents}
-              ]
-            }
-          )
-          
-        else:
-          self.run = self.client.beta.threads.runs.create(
-            thread_id = self.run.thread_id,
-            assistant_id = self.assistant.id,
-            additional_messages = [
-                {
-                  "role": "user",
-                  "content": contents
-                }
-              ]
-          )
-      
-      else:
-        if newthr == True:
-          self.run = self.client.beta.threads.create_and_run(
-            assistant_id = self.assistant.id,
-            thread={
-              "messages": [
-                {"role": "user", "content": f"[{datetime.datetime.now().strftime("%Y-%m-%d, %H:%M:%S")}] {message}"}
-              ]
-            }
-          )
-          
-        else:
-          self.run = self.client.beta.threads.runs.create(
-            thread_id = self.run.thread_id,
-            assistant_id = self.assistant.id,
-            additional_messages = [
-                {
-                  "role": "user",
-                  "content": f"[{datetime.datetime.now().strftime("%Y-%m-%d, %H:%M:%S")}] {message}"
-                }
-              ]
-          )
-        
-      await self.await_responce()
-        
-  async def handle_tool_call(self, run, user):
+    thread_messages = []
   
-    results = []
-    for tool in run.required_action.submit_tool_outputs.tool_calls:
-      result = await self.toolmanager.handle_tool_call(tool, self.client, self.discorduser)
-      results.extend(result)
+    if len(images) != 0:
+      contents = []
+      contents.append({"type": "text", "text": f"[{datetime.datetime.now().strftime("%Y-%m-%d, %H:%M:%S")}] {message}"})
+      for img in images:
+        contents.append({"type": "image_url", "image_url": {"url": img}})
+        
+      thread_messages.append(
+        {"role": "user", "content": contents}
+      )
       
-    self.run = self.client.beta.threads.runs.submit_tool_outputs(
-      thread_id = self.run.thread_id,
-      run_id = self.run.id,
-      tool_outputs = results
-    )
-    
-    await self.await_responce()
-    
-  #Actually written by the bot lmao - i'm lazy
-  def chunk_message(self, message, limit = 2000):
-    chunks = []
-    chunk = ""
-    code_block_open = False
-
-    for line in message.splitlines(keepends=True):
-      if len(chunk) + len(line) <= limit:
-        chunk += line
-        if line.startswith("```"):
-          code_block_open = not code_block_open
+    else:
+      thread_messages.append(
+        {"role": "user", "content": f"[{datetime.datetime.now().strftime("%Y-%m-%d, %H:%M:%S")}] {message}"}
+      )
+      
+        
+    async with dmessage.channel.typing():
+            
+      if newthr == True:
+        self.run = self.client.beta.threads.create_and_run(
+          assistant_id = self.assistant.id,
+          thread = { "messages": thread_messages }
+        )
+        
       else:
-        if code_block_open and not chunk.endswith("```\n"):
-          chunk += "```\n"
-        chunks.append(chunk)
-        chunk = ""
-        if line.startswith("```"):
-          code_block_open = not code_block_open
-          chunk = line
-        else:
-          chunk = line
-        if code_block_open:
-          chunk += "```"  # reopen the code block in the new chunk
-
-    if code_block_open and not chunk.endswith("```\n"):
-        chunk += "```\n"
-    chunks.append(chunk)
-    return chunks
+        self.run = self.client.beta.threads.runs.create(
+          thread_id = self.run.thread_id,
+          assistant_id = self.assistant.id,
+          additional_messages = thread_messages
+        )
+          
+      await self.await_responce()
+          
+    async def handle_tool_call(self, run, user):
+    
+      results = []
+      for tool in run.required_action.submit_tool_outputs.tool_calls:
+        result = await self.toolmanager.handle_tool_call(tool, self.client, self.discorduser)
+        results.extend(result)
+        
+      self.run = self.client.beta.threads.runs.submit_tool_outputs(
+        thread_id = self.run.thread_id,
+        run_id = self.run.id,
+        tool_outputs = results
+      )
+      
+      await self.await_responce()
       
   #Used by starting new thread, opening new thread, and continuing - including tool calls
   async def await_responce(self):
@@ -282,7 +268,7 @@ class OpenAIChatHandler:
           await self.discorduser.dm_channel.send(result)
           
         else:
-          chunks = self.chunk_message(result)
+          chunks = chunk_message(result)
           for chunk in chunks:
             await self.discorduser.dm_channel.send(chunk)
           
@@ -297,7 +283,3 @@ class OpenAIChatHandler:
       case _:
         await self.discorduser.dm_channel.send(f"Unhandled state from normal messages. ({self.run.status})")
         await self.delete_thread()
-        
-
-def Reminder_Prompt():
-  return f"{prompt}\n{backend_message}"

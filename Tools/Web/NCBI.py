@@ -3,11 +3,11 @@ from bs4 import BeautifulSoup, ResultSet
 from googleapiclient.discovery import build
 
 import Tools.ToolCall
-import Tools.GoogleSearch
+import Tools.WebTools
   
 def GetNCBIPage(url: str):
   url = f"{url}/?report=printable"
-  html = requests.get(url, headers = Tools.GoogleSearch.headers).text
+  html = requests.get(url, headers = Tools.WebTools.headers).text
   soup = BeautifulSoup(html, features="html.parser")
 
   results: ResultSet = soup.find_all("p")

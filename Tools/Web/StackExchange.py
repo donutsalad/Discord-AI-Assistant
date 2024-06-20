@@ -2,11 +2,10 @@ import requests
 from bs4 import BeautifulSoup, ResultSet
 from googleapiclient.discovery import build
 
-import Tools.ToolCall
-import Tools.GoogleSearch
+import Tools.WebTools
   
 def GetStackPage(url: str):      
-  html = requests.get(url, headers = Tools.GoogleSearch.headers).text
+  html = requests.get(url, headers = Tools.WebTools.headers).text
   soup = BeautifulSoup(html, features="html.parser")
 
   answers = soup.find_all("div", class_ = "answercell")

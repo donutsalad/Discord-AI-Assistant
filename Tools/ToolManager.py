@@ -7,6 +7,7 @@ import ticker
 import Tools
 import Tools.Dropbox
 import Tools.SearchGoogle
+import Tools.WebPage
 import Tools.WebTools
 import Tools.CustomTools
 import Tools.Wikipedia
@@ -46,7 +47,7 @@ tool_list = [
   {"tool_id": "call_webtool", "method": Tools.WebTools.CallWebTool},
 
   {"tool_id": "search_google", "method": Tools.SearchGoogle.SearchGoogle},
-  {"tool_id": "read_page_from_google", "method": Tools.SearchGoogle.ReadPageFromGoogle},
+  {"tool_id": "read_webpage", "method": Tools.WebPage.ReadSite},
   
   {"tool_id": "search_youtube", "method": Tools.Youtube.GetYoutubeVideos},
   {"tool_id": "get_youtube_transcript", "method": Tools.Youtube.GetYoutubeTranscript},

@@ -1,6 +1,7 @@
 import asyncio
 import datetime
 
+import tokens
 import discordbot
 import assistant
 import ticker
@@ -14,30 +15,6 @@ import Tools.ToolManager
 
 async def main():
   
-  discord_token = ""
-  user_id = 0
-  openai_key = ""
-  assistant_id = ""
-  
-  aquired = 0
-  
-  with open("tokens.txt", "r") as f:
-    while aquired < 4:
-      line = f.readline()
-      if line.startswith("[Discord Bot Token]"):
-        discord_token = f.readline().rstrip("\n")
-        aquired += 1
-      elif line.startswith("[Discord User ID]"):
-        user_id = int(f.readline().rstrip("\n"))
-        aquired += 1
-      elif line.startswith("[Open AI API Key]"):
-        openai_key = f.readline().rstrip("\n")
-        aquired += 1
-      elif line.startswith("[Assistant ID]"):
-        assistant_id = f.readline().rstrip("\n")
-        aquired += 1
-      else: raise Exception("Unrecognised token")
-  
   masterqueue = asyncio.Queue()
   routerqueue = asyncio.Queue()
   assistantqueue = asyncio.Queue()
@@ -46,13 +23,13 @@ async def main():
   reminders = Tools.ReminderBank.ReminderBank("data/reminders")
   files = Tools.MemoryBank.MemoryBank("data/files")
   
-  client = discordbot.SetupDiscordClient(assistantqueue, routerqueue, user_id)
+  client = discordbot.SetupDiscordClient(assistantqueue, routerqueue, tokens.user_id)
   ticking = ticker.Ticker(reminders, memories, files, masterqueue)
   toolmanager = Tools.ToolManager.ToolManager(client, ticking, memories, files, reminders)
   
-  assistant_handler = assistant.OpenAIChatHandler(assistantqueue, toolmanager, client, openai_key, assistant_id, user_id)
+  assistant_handler = assistant.OpenAIChatHandler(assistantqueue, toolmanager, client, tokens.openai_key, tokens.assistant_id, tokens.user_id)
   
-  asyncio.create_task(client.start(discord_token))
+  asyncio.create_task(client.start(tokens.discord_token))
   asyncio.create_task(ticking.TickerLoop())
   asyncio.create_task(assistant_handler.waitloop())
   

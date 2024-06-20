@@ -5,8 +5,6 @@ from googleapiclient.discovery import build
 import Tools.WebTool 
 import json
 
-headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
-  
 class NeuroPost:
     def __init__(self, link, text) -> None:
         self.link = link
@@ -22,7 +20,7 @@ class NeuroPost:
 def GetLatestNews():
   
     url = "https://neurosciencenews.com/"
-    html = requests.get(url, headers = headers).text
+    html = requests.get(url, headers = Tools.WebTools.headers).text
     soup = BeautifulSoup(html, features="html.parser")
 
     posts = soup.find("div", class_ = "block-wrap")
@@ -36,7 +34,7 @@ def GetLatestNews():
 def SearchNeuroArticles(query: str):
   
     url = f"https://neurosciencenews.com/?s={query}"
-    html = requests.get(url, headers = headers).text
+    html = requests.get(url, headers = Tools.WebTools.headers).text
     soup = BeautifulSoup(html, features="html.parser")
 
     posts = soup.find("div", class_ = "main-block-wrap")
@@ -51,7 +49,7 @@ def SearchNeuroArticles(query: str):
 
 def ReadNeuroArticle(url: str):
     
-    html = requests.get(url, headers = headers).text
+    html = requests.get(url, headers = Tools.WebTools.headers).text
     soup = BeautifulSoup(html, features="html.parser")
     
     results: ResultSet = soup.find_all("p")

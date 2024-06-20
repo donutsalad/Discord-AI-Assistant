@@ -1,5 +1,5 @@
 {
-    "name": "read_page_from_google",
+    "name": "read_webpage",
     "description": "This function takes the URL provided and returns the content of the web page.",
     "parameters": {
       "type": "object",
