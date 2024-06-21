@@ -216,20 +216,20 @@ class OpenAIChatHandler:
           
       await self.await_responce()
           
-    async def handle_tool_call(self, run, user):
-    
-      results = []
-      for tool in run.required_action.submit_tool_outputs.tool_calls:
-        result = await self.toolmanager.handle_tool_call(tool, self.client, self.discorduser)
-        results.extend(result)
-        
-      self.run = self.client.beta.threads.runs.submit_tool_outputs(
-        thread_id = self.run.thread_id,
-        run_id = self.run.id,
-        tool_outputs = results
-      )
+  async def handle_tool_call(self, run, user):
+  
+    results = []
+    for tool in run.required_action.submit_tool_outputs.tool_calls:
+      result = await self.toolmanager.handle_tool_call(tool, self.client, self.discorduser)
+      results.extend(result)
       
-      await self.await_responce()
+    self.run = self.client.beta.threads.runs.submit_tool_outputs(
+      thread_id = self.run.thread_id,
+      run_id = self.run.id,
+      tool_outputs = results
+    )
+    
+    await self.await_responce()
       
   #Used by starting new thread, opening new thread, and continuing - including tool calls
   async def await_responce(self):
