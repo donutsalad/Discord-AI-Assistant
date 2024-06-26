@@ -20,6 +20,7 @@ Core functions currently available:
  - Google (search google, read page)
    - Conditionals to catch websites that can be read in specific ways like stackoverflow or ncbi.
  - Vision (if attached file\[s\] are supported filetypes, forward urls to assistant for vision functionality)
+ - Filesearch (if attached file\[s\] are supported filetypes, upload file from downloads folder to a vector store (you need to turn file search on in the dashboard)
 
 Web Tools are a way to create more functionality interfacing with websites and other functions in a way that doesn't clog up the function set in your assistant.
 This way it enables you to add a bunch of web functions, that are only exposed to the bot when needed.
