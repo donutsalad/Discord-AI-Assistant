@@ -173,8 +173,45 @@ class OpenAIChatHandler:
         await attachment.save(f"downloads/{filename}")
         files.append(attachment.url)
         
+        #Vision
         if attachment.content_type in ('image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image.gif'):
           images.append(attachment.url)
+          
+        #File search
+        elif attachment.content_type in (
+          'text/x-c',  # .c
+          'text/x-csharp',  # .cs
+          'text/x-c++',  # .cpp
+          'application/msword',  # .doc
+          'application/vnd.openxmlformats-officedocument.wordprocessingml.document',  # .docx
+          'text/html',  # .html
+          'text/x-java',  # .java
+          'application/json',  # .json
+          'text/markdown',  # .md
+          'application/pdf',  # .pdf
+          'text/x-php',  # .php
+          'application/vnd.openxmlformats-officedocument.presentationml.presentation',  # .pptx
+          'text/x-python',  # .py
+          'text/x-script.python',  # .py
+          'text/x-ruby',  # .rb
+          'text/x-tex',  # .tex
+          'text/plain',  # .txt
+          'text/css',  # .css
+          'text/javascript',  # .js
+          'application/x-sh',  # .sh
+          'application/typescript'  # .ts
+        ):
+          vector_store = self.client.beta.vector_stores.create(name="Discord Assistant")
+          file_streams = [open(f"downloads/{filename}", "rb")]
+          self.client.beta.vector_stores.file_batches.upload_and_poll(
+            vector_store_id = vector_store.id, files=file_streams
+          )
+          
+          self.client.beta.assistants.update(
+            assistant_id = self.asssistant_id,
+            tool_resources={"file_search": {"vector_store_ids": [vector_store.id]}},
+          )
+        
         
       if len(dmessage.content) == 0:
         message = f"Ask me what I'd like to do with these file links: {", ".join(files)}"
