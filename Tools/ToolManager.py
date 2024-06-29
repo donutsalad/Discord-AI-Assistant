@@ -17,7 +17,6 @@ import Tools.MemoryBank
 import Tools.ReminderBank
 import Tools.Reminders
 import Tools.Memory
-import Tools.Files
 import Tools.Reminders
 import Tools.Dropbox
 import Tools.ToolCall
@@ -30,10 +29,6 @@ tool_list = [
   {"tool_id": "create_memory", "method": Tools.Memory.create_memory},
   {"tool_id": "forget_memory", "method": Tools.Memory.forget_memory},
   {"tool_id": "recall_memory", "method": Tools.Memory.recall_memory},
-  
-  {"tool_id": "create_file_memory", "method": Tools.Files.create_file_memory},
-  {"tool_id": "forget_file_memory", "method": Tools.Files.forget_file_memory},
-  {"tool_id": "recall_file_memory", "method": Tools.Files.recall_file_memory},
   
   {"tool_id": "list_dropbox_files", "method": Tools.Dropbox.list_dropbox_files},
   {"tool_id": "upload_dropbox_file", "method": Tools.Dropbox.upload_dropbox_file},
@@ -58,11 +53,10 @@ tool_list = [
 
 class ToolManager:
   
-  def __init__(self, discord: discord.Client, ticking: ticker.Ticker, memory: Tools.MemoryBank.MemoryBank, files: Tools.MemoryBank.MemoryBank, reminders: Tools.ReminderBank.ReminderBank):
+  def __init__(self, discord: discord.Client, ticking: ticker.Ticker, memory: Tools.MemoryBank.MemoryBank, reminders: Tools.ReminderBank.ReminderBank):
     self.ticking = ticking
     self.MemoryBank = memory
     self.reminders = reminders
-    self.files = files
     
     self.discord = discord
 
@@ -76,7 +70,7 @@ class ToolManager:
       if method["tool_id"] == tool.function.name:
         return [{
           "tool_call_id": tool.id,
-          "output": method["method"](Tools.ToolCall.ToolCall(tool.function.name, tool, args, client, self.discord, user, self.MemoryBank, self.reminders, self.files))
+          "output": method["method"](Tools.ToolCall.ToolCall(tool.function.name, tool, args, client, self.discord, user, self.MemoryBank, self.reminders))
         }]
       
     return [{

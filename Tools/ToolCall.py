@@ -5,7 +5,7 @@ import Tools.MemoryBank
 import Tools.ReminderBank
 
 class ToolCall:
-  def __init__(self, call_type, tool, args, client, discord, user, memorybank, reminderbank, filebank):
+  def __init__(self, call_type, tool, args, client, discord, user, memorybank, reminderbank):
     self.call_type: str = call_type
     self.args: dict = args
     self.tool = tool
@@ -14,4 +14,3 @@ class ToolCall:
     self.user: User = user
     self.memorybank: Tools.MemoryBank.MemoryBank = memorybank
     self.reminderbank: Tools.ReminderBank.ReminderBank = reminderbank
-    self.filebank: Tools.MemoryBank.MemoryBank = filebank

@@ -21,11 +21,10 @@ async def main():
   
   memories = Tools.MemoryBank.MemoryBank("data/memories")
   reminders = Tools.ReminderBank.ReminderBank("data/reminders")
-  files = Tools.MemoryBank.MemoryBank("data/files")
   
   client = discordbot.SetupDiscordClient(assistantqueue, routerqueue, tokens.user_id)
-  ticking = ticker.Ticker(reminders, memories, files, masterqueue)
-  toolmanager = Tools.ToolManager.ToolManager(client, ticking, memories, files, reminders)
+  ticking = ticker.Ticker(reminders, memories, masterqueue)
+  toolmanager = Tools.ToolManager.ToolManager(client, ticking, memories, reminders)
   
   assistant_handler = assistant.OpenAIChatHandler(assistantqueue, toolmanager, client, tokens.openai_key, tokens.assistant_id, tokens.user_id)
   
