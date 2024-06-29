@@ -7,11 +7,14 @@ One thing to note: conversations (threads) are terminated by an `<END>` token th
 The benifit is that you don't wrack up input tokens to hold context. If the bot says "Counting electric sheep zzz" that means there is no live thread.
 If you've asked it to summarise an article or generate code, and you don't need that context but you'd like to read another article etc, either say thanks that's all, or directly ask the assistant to terminate the thread.
 
+---
+### Notice: File memory is redundant - If you have file memories please run port_files.py to combine them with the normal memories.
+---
+Files has been made redundant as the memory function is specific enough for overlap to not really be a problem.
+
 Core functions currently available:
  - Memories (fuzzy search, create/recall/destroy)
  - Reminders (fuzzy search, create/find/list/destroy)
- - Files (fuzzy search, store/upload/destroy) \[Saves the CDN link for attachments.\]
-   - Additionally saves the file to downloads folder 
  - Dropbox (simple glob listing for the dropbox folder, list/upload)
  - WebTools (list, call, read all text from generic page)
  - CustomTools (list and call)
