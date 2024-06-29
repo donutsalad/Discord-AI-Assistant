@@ -164,6 +164,8 @@ class OpenAIChatHandler:
     images = []
     
     if len(dmessage.attachments) > 0:
+      contains_files = False
+      
       for attachment in dmessage.attachments:
         filename = attachment.filename
         
@@ -201,7 +203,10 @@ class OpenAIChatHandler:
           'application/x-sh',  # .sh
           'application/typescript'  # .ts
         ):
-          vector_store = self.client.beta.vector_stores.create(name="Discord Assistant")
+          if not contains_files:
+            vector_store = self.client.beta.vector_stores.create(name="Discord Assistant")
+            contains_files = True
+          
           file_streams = [open(f"downloads/{filename}", "rb")]
           self.client.beta.vector_stores.file_batches.upload_and_poll(
             vector_store_id = vector_store.id, files=file_streams
