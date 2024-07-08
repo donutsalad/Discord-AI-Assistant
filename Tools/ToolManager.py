@@ -19,6 +19,7 @@ import Tools.Reminders
 import Tools.Memory
 import Tools.Reminders
 import Tools.Dropbox
+import Tools.DallE
 import Tools.ToolCall
 
 tool_list = [
@@ -48,7 +49,9 @@ tool_list = [
   {"tool_id": "get_youtube_transcript", "method": Tools.Youtube.GetYoutubeTranscript},
 
   {"tool_id": "get_wikipedia_page", "method": Tools.Wikipedia.SearchWikipedia},
-  {"tool_id": "get_wikipedia_references", "method": Tools.Wikipedia.GetWikipediaReferences}
+  {"tool_id": "get_wikipedia_references", "method": Tools.Wikipedia.GetWikipediaReferences},
+  
+  {"tool_id": "generate_image", "method": Tools.DallE.GenerateDallEImage}
 ]
 
 class ToolManager:

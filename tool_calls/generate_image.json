@@ -1,0 +1,16 @@
+{
+  "name": "generate_image",
+  "description": "This image invokes DallE to generate an image based off of the users prompt.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "Prompt": {
+        "type": "string",
+        "description": "The image prompt to give to DallE."
+      }
+    },
+    "required": [
+      "Prompt"
+    ]
+  }
+}
